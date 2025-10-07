@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="MailKit" Version="4.14.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.9" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.9" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
@@ -26,8 +28,8 @@
 
     <ItemGroup>
       <Folder Include="Business\Common\" />
-      <Folder Include="Controllers\OAuth2\" />
       <Folder Include="DataAccess\DataSets\" />
+      <Folder Include="wwwroot\" />
     </ItemGroup>
 
 </Project>
