@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Immutable;
+using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -47,12 +48,15 @@ public partial class TokenController
             Claims.Name,
             Claims.Role);
 
+        // Get roles and convert to ImmutableArray
+        var roles = await UserManager.GetRolesAsync(user);
+        
         // changed since the authorization code/refresh token was issued.
         identity.SetClaim(Claims.Subject, await UserManager.GetUserIdAsync(user))
             .SetClaim(Claims.Email, await UserManager.GetEmailAsync(user))
             .SetClaim(Claims.Name, await UserManager.GetUserNameAsync(user))
             .SetClaim(Claims.PreferredUsername, await UserManager.GetUserNameAsync(user))
-            .SetClaims(Claims.Role, [.. await UserManager.GetRolesAsync(user)]);
+            .SetClaims(Claims.Role, roles.ToImmutableArray());
 
         await OpenIddictClaimsPrincipalManager.HandleAsync(request, identity);
         var principal = new ClaimsPrincipal(identity);

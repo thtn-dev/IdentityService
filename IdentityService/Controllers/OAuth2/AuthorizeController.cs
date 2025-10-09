@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Immutable;
+using System.Security.Claims;
 using IdentityService.Extensions;
 using IdentityService.Helpers;
 using IdentityService.ViewModels;
@@ -138,13 +139,13 @@ public class AuthorizeController(IServiceProvider sp) : OAuthControllerBase(sp)
                     TokenValidationParameters.DefaultAuthenticationType,
                     OpenIddictConstants.Claims.Name,
                     OpenIddictConstants.Claims.Role);
-
+                var roles = await UserManager.GetRolesAsync(user);
                 // Add the claims that will be persisted in the tokens.
                 identity.SetClaim(OpenIddictConstants.Claims.Subject, await UserManager.GetUserIdAsync(user))
                     .SetClaim(OpenIddictConstants.Claims.Email, await UserManager.GetEmailAsync(user))
                     .SetClaim(OpenIddictConstants.Claims.Name, await UserManager.GetUserNameAsync(user))
                     .SetClaim(OpenIddictConstants.Claims.PreferredUsername, await UserManager.GetUserNameAsync(user))
-                    .SetClaims(OpenIddictConstants.Claims.Role, [.. await UserManager.GetRolesAsync(user)]);
+                    .SetClaims(OpenIddictConstants.Claims.Role, roles.ToImmutableArray());
 
                 // Note: in this sample, the granted scopes match the requested scope,
                 // but you may want to allow the user to uncheck specific scopes.
@@ -238,13 +239,13 @@ public class AuthorizeController(IServiceProvider sp) : OAuthControllerBase(sp)
             TokenValidationParameters.DefaultAuthenticationType,
             OpenIddictConstants.Claims.Name,
             OpenIddictConstants.Claims.Role);
-
+        var roles = await UserManager.GetRolesAsync(user);
         // Add the claims that will be persisted in the tokens.
         identity.SetClaim(OpenIddictConstants.Claims.Subject, await UserManager.GetUserIdAsync(user))
             .SetClaim(OpenIddictConstants.Claims.Email, await UserManager.GetEmailAsync(user))
             .SetClaim(OpenIddictConstants.Claims.Name, await UserManager.GetUserNameAsync(user))
             .SetClaim(OpenIddictConstants.Claims.PreferredUsername, await UserManager.GetUserNameAsync(user))
-            .SetClaims(OpenIddictConstants.Claims.Role, [.. await UserManager.GetRolesAsync(user)]);
+            .SetClaims(OpenIddictConstants.Claims.Role, roles.ToImmutableArray());
 
         // Note: in this sample, the granted scopes match the requested scope,
         // but you may want to allow the user to uncheck specific scopes.

@@ -1,5 +1,8 @@
 using IdentityService.Extensions.ServiceCollections;
 using OpenIddict.Validation.AspNetCore;
+using IdentityService.DataAccess;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace IdentityService;
 
