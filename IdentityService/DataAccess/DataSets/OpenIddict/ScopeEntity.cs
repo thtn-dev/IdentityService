@@ -4,5 +4,5 @@ namespace IdentityService.DataAccess.DataSets.OpenIddict;
 
 public class ScopeEntity : OpenIddictEntityFrameworkCoreScope<long>
 {
-    public long Id { get; set; }
+    public override long Id { get; set; }
 }

@@ -4,5 +4,5 @@ namespace IdentityService.DataAccess.DataSets.OpenIddict;
 
 public class AuthorizationEntity : OpenIddictEntityFrameworkCoreAuthorization<long, ApplicationEntity, TokenEntity>
 {
-    public long Id { get; set; }
+    public override long Id { get; set; }
 }
