@@ -36,7 +36,7 @@ public sealed partial class TokenController
 
         // Set the list of scopes granted to the client application in access_token.
         identity.SetScopes(request.GetScopes());
-        OpenIddictExtensions.SetResources(identity, (ImmutableArray<string>)await GetResourcesAsync(request.GetScopes()));
+        identity.SetResources(await GetResourcesAsync(request.GetScopes()));
 
         // handle the token request
         await OpenIddictClaimsPrincipalManager.HandleAsync(request, identity);

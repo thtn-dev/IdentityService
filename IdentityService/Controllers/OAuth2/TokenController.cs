@@ -21,7 +21,7 @@ public sealed partial class TokenController(IServiceProvider sp) : OAuthControll
 
         if (request.IsAuthorizationCodeGrantType() || request.IsRefreshTokenGrantType())
             return await HandleAuthorizationCodeAsync(request, cancellationToken);
-
+    
         return BadRequest(new OpenIddictResponse
         {
             Error = OpenIddictConstants.Errors.UnsupportedGrantType,

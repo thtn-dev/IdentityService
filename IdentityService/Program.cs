@@ -1,3 +1,4 @@
+using IdentityService.BackgroundServices;
 using IdentityService.Extensions.ServiceCollections;
 using OpenIddict.Validation.AspNetCore;
 using IdentityService.DataAccess;
@@ -51,6 +52,8 @@ public abstract class Program
 
         // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
+
+        builder.Services.AddHostedService<SeedDataWorker>();
 
         var app = builder.Build();
 
