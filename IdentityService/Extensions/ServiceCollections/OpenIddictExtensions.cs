@@ -1,4 +1,5 @@
 ﻿using IdentityService.Business.AppClaims;
+using IdentityService.Business.Common.Options;
 using IdentityService.DataAccess;
 using IdentityService.DataAccess.DataSets.OpenIddict;
 
@@ -17,39 +18,41 @@ public static class OpenIddictExtensions
 
             options.UseQuartz();
         });
-        //.AddClient(options =>
-        //{
-        //    options.AllowAuthorizationCodeFlow();
 
-        //    options.AddDevelopmentEncryptionCertificate()
-        //        .AddDevelopmentSigningCertificate();
+        openIddictBuilder.AddClient(options =>
+        {
+            options.AllowAuthorizationCodeFlow();
 
-        //    options.UseAspNetCore()
-        //        .EnableStatusCodePagesIntegration()
-        //        .EnableRedirectionEndpointPassthrough()
-        //        .EnableRedirectionEndpointPassthrough();
+            options.AddDevelopmentEncryptionCertificate()
+                .AddDevelopmentSigningCertificate();
 
-        //    options.UseSystemNetHttp()
-        //        .SetProductInformation(typeof(Program).Assembly);
+            options.UseAspNetCore()
+                .EnableStatusCodePagesIntegration()
+                .EnableRedirectionEndpointPassthrough()
+                .EnableRedirectionEndpointPassthrough();
 
-        //    var externalProviderSettings = configuration.GetSection(nameof(ExternalProviderOptions))
-        //        .Get<ExternalProviderOptions>();
-        //    if (externalProviderSettings == null)
-        //        throw new NullReferenceException($"{nameof(ExternalProviderOptions)} was not configured");
+            options.UseSystemNetHttp()
+                .SetProductInformation(typeof(Program).Assembly);
 
-        //    options.UseWebProviders()
-        //        .AddGoogle(googleOptions =>
-        //        {
-        //            var googleSetting = externalProviderSettings.Google ??
-        //                                throw new NullReferenceException(
-        //                                    $"{nameof(ExternalProviderOptions.Google)} was not configured");
-        //            googleOptions.SetClientId(googleSetting.ClientId)
-        //                .SetClientSecret(googleSetting.ClientSecret)
-        //                .SetRedirectUri(googleSetting.RedirectUri);
-        //            googleOptions.AddScopes("email", "profile");
-        //        });
-        //})
+            var externalProviderSettings = configuration.GetSection(nameof(ExternalProviderOptions))
+                .Get<ExternalProviderOptions>();
+            if (externalProviderSettings == null)
+                throw new NullReferenceException($"{nameof(ExternalProviderOptions)} was not configured");
 
+            options
+                .UseWebProviders()
+                .AddGoogle(googleOptions =>
+                {
+                    var googleSetting = externalProviderSettings.Google ??
+                                        throw new NullReferenceException(
+                                            $"{nameof(ExternalProviderOptions.Google)} was not configured");
+                    googleOptions.SetClientId(googleSetting.ClientId)
+                        .SetClientSecret(googleSetting.ClientSecret)
+                        .SetRedirectUri(googleSetting.RedirectUri);
+                    googleOptions.AddScopes("email", "profile");
+                });
+        });
+        
         openIddictBuilder.AddServer(options =>
         {
             options.SetAuthorizationEndpointUris(configuration["OpenIddict:Endpoints:Authorization"]!)

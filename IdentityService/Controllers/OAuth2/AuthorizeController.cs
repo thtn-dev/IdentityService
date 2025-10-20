@@ -296,7 +296,7 @@ public class AuthorizeController(IServiceProvider sp) : OAuthControllerBase(sp)
     {
         // Ask ASP.NET Core Identity to delete the local and external cookies created
         // when the user agent is redirected from the external identity provider
-        // after a successful authentication flow (e.g Google or Facebook).
+        // after a successful authentication flow (e.g. Google or Facebook).
         await SignInManager.SignOutAsync();
 
         // Returning a SignOutResult will ask OpenIddict to redirect the user agent

@@ -78,10 +78,7 @@ html, body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    overflow: scroll;
     white-space: nowrap;
     line-height: 60px;
-    margin: 0;
-    padding: 0;
 }
 

@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using Microsoft.Extensions.Options;
 using OpenIddict.Abstractions;
+using OpenIddict.Server;
 
 namespace IdentityService.Business.AppClaims;
 
